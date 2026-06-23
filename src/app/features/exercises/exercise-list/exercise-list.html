@@ -1,0 +1,10 @@
+<div>
+
+    <ul>
+      @for(item of exercises(); track item.id){
+         <li>
+             <strong>{{item.name}}</strong>-- {{item.category}}
+            </li>
+        }
+    </ul>
+</div>
