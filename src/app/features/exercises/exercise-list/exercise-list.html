@@ -1,10 +1,16 @@
 <div>
-
+    <input #newExerciseInput type="text" name="noweCwiczenie" placeholder="Dodaj ćwiczenie">
+    <select #newExerciseCategory>
+        <option value="Push">Push</option>
+        <option value="Pull">Pull</option>
+    </select>
+    <button (click)="addExercise(newExerciseInput.value, newExerciseCategory.value)">Dodaj</button>
     <ul>
       @for(item of exercises(); track item.id){
          <li>
              <strong>{{item.name}}</strong>-- {{item.category}}
-            </li>
+             <button (click)="removeExcercise(item.id)">Usun</button>
+         </li>
         }
     </ul>
 </div>
