@@ -1,10 +1,26 @@
 <div>
-    <h2>Logowanie serii</h2>
+    <a routerLink=""><button>Wróc do listy ćwiczeń</button></a>
+
+    <div>
+        <button (click)="activeTab.set('today')">
+            Dziseijszy trening
+        </button>
+        <button (click)="activeTab.set('history')">
+            Histroria Treningów
+        </button>
+    </div>
+
+    @if (activeTab()=='today') {
+        <h2>Logowanie serii</h2>
     
-    <input #ciezar type="number" placeholder="Ciężar (kg)" >
-    <input #powtorzenia type="number" placeholder="Ilość powtórzeń" >
+    <input #ciezar type="number" placeholder="Ciężar (kg)" (input)="0">
+    <input #powtorzenia type="number" placeholder="Ilość powtórzeń" (input)="0">
+   <label>
+        <input #upadek type="checkbox">Do upadku
+   </label>
+ 
     
-    <button (click)="zapiszSerie(ciezar, powtorzenia)" >Zapisz serie</button>
+    <button (click)="zapiszSerie(ciezar, powtorzenia, upadek.checked)"[disabled]="!ciezar.value || !powtorzenia.value" >Zapisz serie</button>
     
     <hr>
 
@@ -17,6 +33,8 @@
                     <th>Seria</th>
                     <th>Ciężar (kg)</th>
                     <th>Powtorzenia</th>
+                    <th>Upadek</th>
+                    <th>Usuń</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +42,8 @@
                     <tr>
                         <td>{{ $index + 1 }}</td> <td>{{ set.weight }}</td>
                         <td>{{ set.reps }}</td>
+                        <td>{{set.isFailure}}</td>
+                        <button (click)="removeSerie($index)">usun</button>
                     </tr>
                 }
             </tbody>
@@ -31,5 +51,27 @@
         <p><strong>Całkowity tonaż dzisiaj:</strong> {{ todayLog()!.totalVolume }} kg</p>
     }@else {
         <p>Brak seri na dzisaj. Zrób pierwszą!</p>
+    }
+    }@else if (activeTab()=='history') {
+        <div>
+            <table [border]="1" [cellPadding]="1">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>1RM</th>
+                        <th>Całkowity tonaż</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (log of historyLog(); track log.id) {
+                        <tr>
+                            <th>{{log.date}}</th>
+                            <th>{{log.estimatedOneRepMax}}</th>
+                            <th>{{log.totalVolume}}</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
 </div>
