@@ -8,7 +8,7 @@
     <ul>
       @for(item of exercises(); track item.id){
          <li>
-             <strong>{{item.name}}</strong>-- {{item.category}}
+             <a [routerLink]= "['/log',item.id]"><strong>{{item.name}}</strong>-- {{item.category}}</a> 
              <button (click)="removeExcercise(item.id)">Usun</button>
          </li>
         }

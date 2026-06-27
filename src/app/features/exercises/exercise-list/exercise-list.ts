@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { db } from '../../../core/db/index-db.service';
 import { OnInit,signal,computed } from '@angular/core';
 import { Excercise } from '../../../core/models/workout-model';
+import { RouterLink } from "@angular/router";
 @Component({
   selector: 'app-exercise-list',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './exercise-list.html',
   styleUrl: './exercise-list.css',
 })
@@ -37,7 +38,6 @@ export class ExerciseListComponent implements OnInit{
   }
 
   async removeExcercise(id:number|undefined){
-
     if (!id){
       return;
     }

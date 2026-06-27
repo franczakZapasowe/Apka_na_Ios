@@ -1,0 +1,35 @@
+<div>
+    <h2>Logowanie serii</h2>
+    
+    <input #ciezar type="number" placeholder="Ciężar (kg)" >
+    <input #powtorzenia type="number" placeholder="Ilość powtórzeń" >
+    
+    <button (click)="zapiszSerie(ciezar, powtorzenia)" >Zapisz serie</button>
+    
+    <hr>
+
+    @if (todayLog()) {
+        <h3>Dzisiejsze serie</h3>
+
+        <table [border]="1" [cellPadding]="1">
+            <thead>
+                <tr>
+                    <th>Seria</th>
+                    <th>Ciężar (kg)</th>
+                    <th>Powtorzenia</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (set of todayLog()!.sets; track $index) {
+                    <tr>
+                        <td>{{ $index + 1 }}</td> <td>{{ set.weight }}</td>
+                        <td>{{ set.reps }}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p><strong>Całkowity tonaż dzisiaj:</strong> {{ todayLog()!.totalVolume }} kg</p>
+    }@else {
+        <p>Brak seri na dzisaj. Zrób pierwszą!</p>
+    }
+</div>
